@@ -10,41 +10,25 @@ function convertToRoman(num) {
     };
 
   //your code here
-	let result = "";
+	 const roman = [
+    ['M',1000],
+    ['CM',900],   // C before M
+    ['D',500],
+    ['CD',400],   // C before D
+    ['C',100],
+    ['XC',90],    // X before C
+    ['L',50],
+    ['XL',40],    // X before L
+    ['X',10],
+    ['IX',9],     // I before X
+    ['V',5],
+    ['IV',4],     // I before V
+    ['I',1]
+  ];
 
-  for (let i = 0; i < 7; i++) {
-    let [sym, val] = obj[i];
+  let result = "";
 
-    // C before M and D
-    if (i === 0 || i === 1) {
-      let [sSym, sVal] = obj[2];
-      if (num >= val - sVal && num < val) {
-        result += sSym + sym;
-        num -= (val - sVal);
-        continue;
-      }
-    }
-
-    // X before C and L
-    if (i === 2 || i === 3) {
-      let [sSym, sVal] = obj[4];
-      if (num >= val - sVal && num < val) {
-        result += sSym + sym;
-        num -= (val - sVal);
-        continue;
-      }
-    }
-
-    // I before X and V
-    if (i === 4 || i === 5) {
-      let [sSym, sVal] = obj[6];
-      if (num >= val - sVal && num < val) {
-        result += sSym + sym;
-        num -= (val - sVal);
-        continue;
-      }
-    }
-
+  for (let [sym, val] of roman) {
     while (num >= val) {
       result += sym;
       num -= val;
