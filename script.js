@@ -10,6 +10,32 @@ function convertToRoman(num) {
     };
 
   //your code here
+	if (num === 0) return "";
+
+  let result = "";
+
+  for (let i = 0; i < 7; i++) {
+    let [sym, val] = obj[i];
+
+    // subtractive case (like IV, IX, XL, XC, CD, CM)
+    if (i + 2 < 7) {
+      let [smallSym, smallVal] = obj[i + 2];
+      if (num >= val - smallVal && num < val) {
+        result += smallSym + sym;
+        num -= (val - smallVal);
+        continue;
+      }
+    }
+
+    // normal case
+    while (num >= val) {
+      result += sym;
+      num -= val;
+    }
+  }
+
+  return result;
+}
 
 }
 // You can test your code by running the above function and printing it to console by pressing the run button at the top. To run it with input 36, uncomment the following line
