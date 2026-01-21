@@ -10,21 +10,29 @@ function convertToRoman(num) {
     };
 
   //your code here
-	if (num === 0) return "";
+	 if (num === 0) return "";
 
   let result = "";
 
   for (let i = 0; i < 7; i++) {
     let [sym, val] = obj[i];
 
-    // subtractive case (like IV, IX, XL, XC, CD, CM)
-    if (i + 2 < 7) {
-      let [smallSym, smallVal] = obj[i + 2];
-      if (num >= val - smallVal && num < val) {
-        result += smallSym + sym;
-        num -= (val - smallVal);
-        continue;
-      }
+    let smallSym, smallVal;
+
+    // choose correct smaller symbol for subtraction
+    if (i === 0 || i === 1) {          
+      [smallSym, smallVal] = obj[2];
+    } else if (i === 2 || i === 3) {   
+      [smallSym, smallVal] = obj[4];
+    } else if (i === 4 || i === 5) {   
+      [smallSym, smallVal] = obj[6];
+    }
+
+    // subtractive case
+    if (smallVal && num >= val - smallVal && num < val) {
+      result += smallSym + sym;
+      num -= (val - smallVal);
+      continue;
     }
 
     // normal case
