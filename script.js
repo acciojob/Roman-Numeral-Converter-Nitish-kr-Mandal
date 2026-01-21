@@ -10,40 +10,41 @@ function convertToRoman(num) {
     };
 
   //your code here
-	 let result = "";
+	let result = "";
 
   for (let i = 0; i < 7; i++) {
     let [sym, val] = obj[i];
 
-    // Handle subtractive cases correctly
-    if (i === 0 || i === 1) { // M, D → use C (900, 400)
-      let [smallSym, smallVal] = obj[2];
-      if (num >= val - smallVal && num < val) {
-        result += smallSym + sym;
-        num -= (val - smallVal);
+    // C before M and D
+    if (i === 0 || i === 1) {
+      let [sSym, sVal] = obj[2];
+      if (num >= val - sVal && num < val) {
+        result += sSym + sym;
+        num -= (val - sVal);
         continue;
       }
     }
 
-    if (i === 2 || i === 3) { // C, L → use X (90, 40)
-      let [smallSym, smallVal] = obj[4];
-      if (num >= val - smallVal && num < val) {
-        result += smallSym + sym;
-        num -= (val - smallVal);
+    // X before C and L
+    if (i === 2 || i === 3) {
+      let [sSym, sVal] = obj[4];
+      if (num >= val - sVal && num < val) {
+        result += sSym + sym;
+        num -= (val - sVal);
         continue;
       }
     }
 
-    if (i === 4 || i === 5) { // X, V → use I (9, 4)
-      let [smallSym, smallVal] = obj[6];
-      if (num >= val - smallVal && num < val) {
-        result += smallSym + sym;
-        num -= (val - smallVal);
+    // I before X and V
+    if (i === 4 || i === 5) {
+      let [sSym, sVal] = obj[6];
+      if (num >= val - sVal && num < val) {
+        result += sSym + sym;
+        num -= (val - sVal);
         continue;
       }
     }
 
-    // Normal case
     while (num >= val) {
       result += sym;
       num -= val;
