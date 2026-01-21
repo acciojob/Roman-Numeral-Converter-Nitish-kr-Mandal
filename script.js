@@ -10,32 +10,40 @@ function convertToRoman(num) {
     };
 
   //your code here
-	 if (num === 0) return "";
-
-  let result = "";
+	 let result = "";
 
   for (let i = 0; i < 7; i++) {
     let [sym, val] = obj[i];
 
-    let smallSym, smallVal;
-
-    // choose correct smaller symbol for subtraction
-    if (i === 0 || i === 1) {          
-      [smallSym, smallVal] = obj[2];
-    } else if (i === 2 || i === 3) {   
-      [smallSym, smallVal] = obj[4];
-    } else if (i === 4 || i === 5) {   
-      [smallSym, smallVal] = obj[6];
+    // Handle subtractive cases correctly
+    if (i === 0 || i === 1) { // M, D → use C (900, 400)
+      let [smallSym, smallVal] = obj[2];
+      if (num >= val - smallVal && num < val) {
+        result += smallSym + sym;
+        num -= (val - smallVal);
+        continue;
+      }
     }
 
-    // subtractive case
-    if (smallVal && num >= val - smallVal && num < val) {
-      result += smallSym + sym;
-      num -= (val - smallVal);
-      continue;
+    if (i === 2 || i === 3) { // C, L → use X (90, 40)
+      let [smallSym, smallVal] = obj[4];
+      if (num >= val - smallVal && num < val) {
+        result += smallSym + sym;
+        num -= (val - smallVal);
+        continue;
+      }
     }
 
-    // normal case
+    if (i === 4 || i === 5) { // X, V → use I (9, 4)
+      let [smallSym, smallVal] = obj[6];
+      if (num >= val - smallVal && num < val) {
+        result += smallSym + sym;
+        num -= (val - smallVal);
+        continue;
+      }
+    }
+
+    // Normal case
     while (num >= val) {
       result += sym;
       num -= val;
